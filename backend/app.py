@@ -7,7 +7,9 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from your extension
 
+# -----------------------------
 # Cache for trained systems
+# -----------------------------
 systems_cache = {}
 
 # -----------------------------
@@ -29,7 +31,7 @@ def to_native(x):
     return x
 
 # -----------------------------
-# Flask route: get stock info
+# Endpoint: Get stock info & predictions
 # -----------------------------
 @app.route('/get_stock_info')
 def get_stock_info():
@@ -69,7 +71,14 @@ def get_stock_info():
     return jsonify(response)
 
 # -----------------------------
-# Run server
+# Endpoint: Get all valid tickers (for extension)
+# -----------------------------
+@app.route('/get_tickers')
+def get_tickers():
+    return jsonify({"tickers": list(VALID_TICKERS)})
+
+# -----------------------------
+# Run Flask server
 # -----------------------------
 if __name__ == "__main__":
     app.run(debug=True)
